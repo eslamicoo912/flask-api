@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form method="post">
+      <input type="text" placeholder="type name" name="name" id="name_input" />
+      <button type="submit" class="submit_btn">Submit</button>
+    </form>
+
+    <script>
+      let name = document.getElementById("name_input");
+      let button = document.querySelector(".submit_btn");
+
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "http://127.0.0.1:5000/");
+        xhr.send();
+        xhr.responseType = "json";
+        xhr.onload = () => {
+          xhr.setRequestHeader(
+            "Access-Control-Allow-Origin",
+            "http://127.0.0.1:5000/"
+          );
+          if (xhr.readyState == 4 && xhr.status == 200) {
+            const data = xhr.response;
+            console.log(data);
+          } else {
+            console.log(`Error: ${xhr.status}`);
+          }
+        };
+      });
+    </script>
+  </body>
+</html>
